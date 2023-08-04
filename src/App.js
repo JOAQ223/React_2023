@@ -1,32 +1,57 @@
 //import logo from './logo.svg';
 import './App.css';
 import {useState} from "react";
-
+import { Task } from './components/Task';
 function App() {
-  const [age, setAge]= useState(0);
-  const [inputValue, setInputValue]= useState("");
- const [showText,SetShowText]=useState(true);
-  const [textColor, SetTextColor]= useState("black");
-  const increaseAge= () =>{
-    setAge(age+1);
+  const [todoList,setTodoList]= useState([]);
+  const [newTask,setNewTask] = useState("");
+  const handleChange=(Event)=>{
+     setNewTask(Event.target.value);
+  };
+  const addTask =() =>{
+   // const newTodoList = [...todoList ,newTask];
+   const task = {
+    id: todoList.length === 0 ? 1 : todoList[todoList.length -1].id +1 ,
+    TaskName: newTask,
+    completed: false,
+   };
+   setTodoList(task.taskName !== "" ? [...todoList, task] : todoList);
+  };
+  const deleteTask=(id)=>{
+    //user filter option 
+    //const newTodoList =todoList.filter((task)=>{
+     //return task !==TaskName;
+    //});
+    setTodoList(todoList.filter((task) => task.id !== id));
+   };
+   const completeTask = (id) => {
+    setTodoList(todoList.map((task) => {
+        if (task.id === id) { 
+          return { ...task, completed: true };
+        } else {
+          return task;
+        }
+      })
+    );
   };
 
-  const handleInputChange =(Event) =>{
-    setInputValue(Event.target.value);
-  };
   return (
     <div className="App">
-      {age}
-      <button  className='btn' onClick={() =>{
-        SetTextColor(textColor=== "black" ? "red" : "black");
-        //SetShowText(!showText);
-      }}
-      >Increas age </button>
-      ,<input type="text" onChange={handleInputChange} />
-      {inputValue}
-      {showText &&  <h1>SHOW OR  HIDE </h1>}
-      <h1 style={{color:textColor}} > change color </h1>
-    </div>
+      <h1> how do u see the word </h1>
+      <div className="addTask">
+        <input onChange={handleChange}></input>
+        <button onClick={addTask}>Add Task </button>
+      </div>
+      <div className="list">
+        {todoList.map((task)=> {        
+          return <Task TaskName={task.TaskName} 
+          id={task.id}
+          deleteTask={deleteTask}
+          completeTask={completeTask}
+           />})}
+      </div>
+       
+         </div>
   );
 }
 
