@@ -2,7 +2,10 @@ import './App.css';
 import { Component } from 'react';
 import Greet from './components/Greet';
 import Welcome from './components/Welcome';
-
+import Footer from './components/Footer';
+import Header from './components/Header'; // Import the Header component
+import './css/Header.css'; 
+import './css/Footer.css';// Import the CSS file
 //every c omponenen needs to start with a big letter .
 // components need a new syntaxis call with html tag <compmtitle/>
 // ig u makr app.module.css then u can render import styles from ""
@@ -16,6 +19,7 @@ const users =[  {name: "Pedro", age:21 },
 function App(){
   const title = "how do u look in the world ";
   return <div classtitle="App">
+    <Header/>
     {title} 
     {users.map((user,key)=>{
      return <User name= {user.name}  age={user.age}> </User>;
@@ -28,6 +32,7 @@ function App(){
      </div>
       <Greet/>
         <Welcome/>
+        <Footer/>
   </div>
 }
 
